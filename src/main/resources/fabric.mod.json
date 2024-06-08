@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "morecursors",
+  "version": "${version}",
+  "name": "MoreCursors",
+  "description": "",
+  "authors": [
+    "557"
+  ],
+  "contact": {
+    "website": "",
+    "repo": "https://github.com/KKW557/MoreCursors"
+  },
+  "license": "LGPL-3.0-only",
+  "icon": "assets/morecursors/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "icu.suc.morecursors.MoreCursors"
+    ]
+  },
+  "mixins": [
+    "morecursors.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
