@@ -11,7 +11,7 @@
     "website": "",
     "repo": "https://github.com/KKW557/MoreCursors"
   },
-  "license": "LGPL-3.0-only",
+  "license": "GPL-3.0-only",
   "icon": "assets/morecursors/icon.png",
   "environment": "client",
   "entrypoints": {
