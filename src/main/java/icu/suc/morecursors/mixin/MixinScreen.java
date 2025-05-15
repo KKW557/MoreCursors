@@ -1,4 +1,4 @@
-package icu.suc.mc.morecursors.mixin;
+package icu.suc.morecursors.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

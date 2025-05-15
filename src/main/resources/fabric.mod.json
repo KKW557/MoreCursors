@@ -15,7 +15,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "icu.suc.mc.morecursors.MoreCursors"
+      "icu.suc.morecursors.MoreCursors"
     ]
   },
   "mixins": [

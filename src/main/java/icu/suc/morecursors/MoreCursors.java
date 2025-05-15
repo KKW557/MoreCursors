@@ -1,4 +1,4 @@
-package icu.suc.mc.morecursors;
+package icu.suc.morecursors;
 
 import net.fabricmc.api.ClientModInitializer;
 
