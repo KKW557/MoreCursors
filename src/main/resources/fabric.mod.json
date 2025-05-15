@@ -8,15 +8,14 @@
     "557"
   ],
   "contact": {
-    "website": "",
     "repo": "https://github.com/KKW557/MoreCursors"
   },
-  "license": "LGPL-3.0-only",
-  "icon": "assets/morecursors/icon.png",
+  "license": "GPL-3.0-only",
+  "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "icu.suc.morecursors.MoreCursors"
+      "icu.suc.mc.morecursors.MoreCursors"
     ]
   },
   "mixins": [
@@ -24,7 +23,6 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
     "minecraft": ">=1.20"
   }
 }
