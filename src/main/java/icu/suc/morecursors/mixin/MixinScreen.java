@@ -43,7 +43,11 @@ public abstract class MixinScreen {
     private void modifyCursor(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         var mc = MinecraftClient.getInstance();
         var handle = mc.getWindow().getHandle();
-        var screen = (Screen) (Object) this;
+        var screen = MinecraftClient.getInstance().currentScreen;
+
+        if (screen == null) {
+            return;
+        }
 
         boolean hovered = false;
         for (Element element : screen.children()) {
