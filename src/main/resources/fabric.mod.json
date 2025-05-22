@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "morecursors",
   "version": "${version}",
-  "name": "MoreCursors",
-  "description": "More mouse cursors",
+  "name": "More Cursors",
+  "description": "Adjust the appropriate cursor state according to the GUI element covered by the cursor.",
   "authors": [
     "557"
   ],
@@ -15,11 +15,6 @@
   "license": "GPL-3.0-only",
   "icon": "icon.png",
   "environment": "client",
-  "entrypoints": {
-    "client": [
-      "icu.suc.morecursors.MoreCursors"
-    ]
-  },
   "mixins": [
     "morecursors.mixins.json"
   ],

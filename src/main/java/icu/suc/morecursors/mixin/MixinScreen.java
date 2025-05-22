@@ -1,5 +1,6 @@
 package icu.suc.morecursors.mixin;
 
+import icu.suc.morecursors.Cursors;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
@@ -18,43 +19,26 @@ import java.util.Objects;
 @Mixin(Screen.class)
 public abstract class MixinScreen {
     @Unique
-    private static Long ARROW_CURSOR;
-    @Unique
-    private static Long HAND_CURSOR;
-    @Unique
-    private static Long NOT_ALLOWED_CURSOR;
-    @Unique
-    private static Long IBEAM_CURSOR;
+    private static long CURRENT_CURSOR;
 
     @Unique
     private static void setCursor(long handle, long cursor) {
-        if (Objects.equals(cursor, 0)) {
+        if (Objects.equals(cursor, 0) || Objects.equals(cursor, CURRENT_CURSOR)) {
             return;
         }
         GLFW.glfwSetCursor(handle, cursor);
+        CURRENT_CURSOR = cursor;
     }
 
     @Unique
     private static boolean adjustCursor(long handle, Element element) {
-        if (Objects.isNull(ARROW_CURSOR)) {
-            ARROW_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR);
-        }
-        if (Objects.isNull(HAND_CURSOR)) {
-            HAND_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR);
-        }
-        if (Objects.isNull(NOT_ALLOWED_CURSOR)) {
-            NOT_ALLOWED_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_NOT_ALLOWED_CURSOR);
-        }
-        if (Objects.isNull(IBEAM_CURSOR)) {
-            IBEAM_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_IBEAM_CURSOR);
-        }
         if (element instanceof ClickableWidget clickable && clickable.visible && clickable.isHovered()) {
             if (!clickable.active) {
-                setCursor(handle, NOT_ALLOWED_CURSOR);
+                setCursor(handle, Cursors.NOT_ALLOWED_CURSOR);
             } else if (clickable instanceof TextFieldWidget) {
-                setCursor(handle, IBEAM_CURSOR);
+                setCursor(handle, Cursors.IBEAM_CURSOR);
             } else {
-                setCursor(handle, HAND_CURSOR);
+                setCursor(handle, Cursors.HAND_CURSOR);
             }
             return true;
         }
@@ -65,19 +49,23 @@ public abstract class MixinScreen {
     private void modifyCursor(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         var mc = MinecraftClient.getInstance();
         var handle = mc.getWindow().getHandle();
-        var screen = MinecraftClient.getInstance().currentScreen;
 
-        if (screen == null) {
+        if (Objects.equals(handle, 0)) {
             return;
         }
 
-        boolean hovered = false;
-        for (Element element : screen.children()) {
-            hovered = adjustCursor(handle, element) || hovered;
+        var screen = MinecraftClient.getInstance().currentScreen;
+
+        if (Objects.isNull(screen)) {
+            return;
         }
 
-        if (!hovered) {
-            setCursor(handle, ARROW_CURSOR);
+        for (int i = screen.children().size() - 1; i >= 0; i--) {
+            if (adjustCursor(handle, screen.children().get(i))) {
+                return;
+            }
         }
+
+        setCursor(handle, Cursors.ARROW_CURSOR);
     }
 }
