@@ -13,38 +13,48 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
 @Mixin(Screen.class)
 public abstract class MixinScreen {
     @Unique
-    private static long ARROW_CURSOR;
+    private static Long ARROW_CURSOR;
     @Unique
-    private static long HAND_CURSOR;
+    private static Long HAND_CURSOR;
     @Unique
-    private static long NOT_ALLOWED_CURSOR;
+    private static Long NOT_ALLOWED_CURSOR;
     @Unique
-    private static long IBEAM_CURSOR;
+    private static Long IBEAM_CURSOR;
+
+    @Unique
+    private static void setCursor(long handle, long cursor) {
+        if (Objects.equals(cursor, 0)) {
+            return;
+        }
+        GLFW.glfwSetCursor(handle, cursor);
+    }
 
     @Unique
     private static boolean adjustCursor(long handle, Element element) {
-        if (ARROW_CURSOR == 0) {
+        if (Objects.isNull(ARROW_CURSOR)) {
             ARROW_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR);
         }
-        if (HAND_CURSOR == 0) {
+        if (Objects.isNull(HAND_CURSOR)) {
             HAND_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR);
         }
-        if (NOT_ALLOWED_CURSOR == 0) {
+        if (Objects.isNull(NOT_ALLOWED_CURSOR)) {
             NOT_ALLOWED_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_NOT_ALLOWED_CURSOR);
         }
-        if (IBEAM_CURSOR == 0) {
+        if (Objects.isNull(IBEAM_CURSOR)) {
             IBEAM_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_IBEAM_CURSOR);
         }
         if (element instanceof ClickableWidget clickable && clickable.visible && clickable.isHovered()) {
             if (!clickable.active) {
-                GLFW.glfwSetCursor(handle, NOT_ALLOWED_CURSOR);
+                setCursor(handle, NOT_ALLOWED_CURSOR);
             } else if (clickable instanceof TextFieldWidget) {
-                GLFW.glfwSetCursor(handle, IBEAM_CURSOR);
+                setCursor(handle, IBEAM_CURSOR);
             } else {
-                GLFW.glfwSetCursor(handle, HAND_CURSOR);
+                setCursor(handle, HAND_CURSOR);
             }
             return true;
         }
@@ -67,7 +77,7 @@ public abstract class MixinScreen {
         }
 
         if (!hovered) {
-            GLFW.glfwSetCursor(handle, ARROW_CURSOR);
+            setCursor(handle, ARROW_CURSOR);
         }
     }
 }
