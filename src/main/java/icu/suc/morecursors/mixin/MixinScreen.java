@@ -16,16 +16,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Screen.class)
 public abstract class MixinScreen {
     @Unique
-    private static final long ARROW_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR);
+    private static long ARROW_CURSOR;
     @Unique
-    private static final long HAND_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR);
+    private static long HAND_CURSOR;
     @Unique
-    private static final long NOT_ALLOWED_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_NOT_ALLOWED_CURSOR);
+    private static long NOT_ALLOWED_CURSOR;
     @Unique
-    private static final long IBEAM_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_IBEAM_CURSOR);
+    private static long IBEAM_CURSOR;
 
     @Unique
     private static boolean adjustCursor(long handle, Element element) {
+        if (ARROW_CURSOR == 0) {
+            ARROW_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR);
+        }
+        if (HAND_CURSOR == 0) {
+            HAND_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR);
+        }
+        if (NOT_ALLOWED_CURSOR == 0) {
+            NOT_ALLOWED_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_NOT_ALLOWED_CURSOR);
+        }
+        if (IBEAM_CURSOR == 0) {
+            IBEAM_CURSOR = GLFW.glfwCreateStandardCursor(GLFW.GLFW_IBEAM_CURSOR);
+        }
         if (element instanceof ClickableWidget clickable && clickable.visible && clickable.isHovered()) {
             if (!clickable.active) {
                 GLFW.glfwSetCursor(handle, NOT_ALLOWED_CURSOR);
