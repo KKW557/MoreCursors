@@ -23,7 +23,7 @@ public abstract class MixinScreen {
 
     @Unique
     private static void setCursor(long handle, long cursor) {
-        if (Objects.equals(cursor, 0) || Objects.equals(cursor, CURRENT_CURSOR)) {
+        if (cursor == 0 || cursor == CURRENT_CURSOR) {
             return;
         }
         GLFW.glfwSetCursor(handle, cursor);
@@ -50,7 +50,7 @@ public abstract class MixinScreen {
         var mc = MinecraftClient.getInstance();
         var handle = mc.getWindow().getHandle();
 
-        if (Objects.equals(handle, 0)) {
+        if (handle == 0) {
             return;
         }
 
