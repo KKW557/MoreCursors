@@ -8,7 +8,9 @@
     "557"
   ],
   "contact": {
-    "repo": "https://github.com/KKW557/MoreCursors"
+    "repo": "https://github.com/KKW557/MoreCursors",
+    "issues": "https://github.com/KKW557/MoreCursors/issues",
+    "homepage": "https://modrinth.com/mod/morecursors"
   },
   "license": "GPL-3.0-only",
   "icon": "icon.png",
